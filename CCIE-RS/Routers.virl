@@ -3,9 +3,8 @@
     <extensions>
         <entry key="AutoNetkit.enable_cdp" type="Boolean">true</entry>
         <entry key="AutoNetkit.address_family" type="String">None</entry>
-        <entry key="management_network" type="String">flat</entry>
     </extensions>
-    <node name="SWITCH" type="SIMPLE" subtype="Unmanaged Switch" location="402,256">
+    <node name="SWITCH" type="SIMPLE" subtype="Unmanaged Switch" location="737,337">
         <interface id="0" name="link1"/>
         <interface id="1" name="link2"/>
         <interface id="2" name="link3"/>
@@ -50,15 +49,12 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
 ip classless
 ip subnet-zero
 no ip domain lookup
 ip domain name virl.info
 crypto key generate rsa modulus 768
 ip ssh server algorithm authentication password
-username cisco privilege 15 secret cisco
 line vty 0 4
  transport input ssh telnet
  exec-timeout 720 0
@@ -130,8 +126,6 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
 ip classless
 ip subnet-zero
 no ip domain lookup
@@ -166,7 +160,1439 @@ interface GigabitEthernet2
   description to SWITCH
   no ip address
   cdp enable
-  no shutdown
+    <node name="R-1" type="SIMPLE" subtype="CSR1000v" location="364,158">
+        <extensions>
+            <entry key="config" type="String">!
+! Last configuration change at 22:16:02 UTC Mon Nov 12 2018
+!
+version 16.6
+service config
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R-1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9L3BONHY6H4
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface GigabitEthernet1
+ ip address dhcp
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ cdp enable
+!
+interface GigabitEthernet2
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+ip http client source-interface GigabitEthernet1
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ stopbits 1
+line vty 0
+ login
+line vty 1
+ login
+ length 0
+line vty 2 4
+ login
+!
+!
+!
+!
+!
+!
+end
+
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet2"/>
+    </node>
+    <node name="R-2" type="SIMPLE" subtype="CSR1000v" location="460,158">
+        <extensions>
+            <entry key="config" type="String">!
+! Last configuration change at 06:03:58 UTC Mon Nov 19 2018
+!
+version 16.6
+service config
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R2
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1981805941
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1981805941
+ revocation-check none
+ rsakeypair TP-self-signed-1981805941
+!
+!
+crypto pki certificate chain TP-self-signed-1981805941
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9JH9PUOZ9UR
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+! 
+!
+!
+!
+!
+!
+!
+crypto isakmp policy 10
+ encr aes
+ hash md5
+ authentication pre-share
+ group 5
+crypto isakmp key cisco address 0.0.0.0        
+!
+!
+crypto ipsec transform-set ESP_AES_SHA esp-aes esp-sha-hmac 
+ mode tunnel
+!
+crypto ipsec profile DMVPN_PROFILE
+ set transform-set ESP_AES_SHA 
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 150.1.2.2 255.255.255.255
+ ipv6 address 2001:150:2:2::2/128
+!
+interface Tunnel0
+ ip address 155.1.0.2 255.255.255.0
+ no ip redirects
+ ip mtu 1400
+ ip nhrp authentication NHRPPASS
+ ip nhrp map 155.1.0.5 169.254.100.5
+ ip nhrp map multicast 169.254.100.5
+ ip nhrp network-id 1
+ ip nhrp holdtime 300
+ ip nhrp nhs 155.1.0.5
+ ip tcp adjust-mss 1360
+ tunnel source GigabitEthernet2.100
+ tunnel mode gre multipoint
+ tunnel key 150
+ tunnel protection ipsec profile DMVPN_PROFILE
+!
+interface GigabitEthernet1
+ ip address 10.255.1.49 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ cdp enable
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2.23
+ encapsulation dot1Q 23
+ ip address 155.1.23.2 255.255.255.0
+ ipv6 address 2001:155:1:23::2/64
+!
+interface GigabitEthernet2.100
+ encapsulation dot1Q 100
+ ip address 169.254.100.2 255.255.255.0
+ ipv6 address 2001:169:254:100::2/64
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+no ip http secure-server
+ip http client source-interface GigabitEthernet1
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0
+ privilege level 15
+ no login
+line vty 1
+ privilege level 15
+ no login
+ length 0
+line vty 2 4
+ privilege level 15
+ no login
+!
+!
+!
+!
+!
+!
+end
+
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet2"/>
+    </node>
+    <node name="R-3" type="SIMPLE" subtype="CSR1000v" location="556,158">
+        <extensions>
+            <entry key="config" type="String">!
+! Last configuration change at 06:03:58 UTC Mon Nov 19 2018
+!
+version 16.6
+service config
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R3
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-157483156
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-157483156
+ revocation-check none
+ rsakeypair TP-self-signed-157483156
+!
+!
+crypto pki certificate chain TP-self-signed-157483156
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9160IOK3XO5
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+! 
+!
+!
+!
+!
+!
+!
+crypto isakmp policy 10
+ encr aes
+ hash md5
+ authentication pre-share
+ group 5
+crypto isakmp key cisco address 0.0.0.0        
+!
+!
+crypto ipsec transform-set ESP_AES_SHA esp-aes esp-sha-hmac 
+ mode tunnel
+!
+crypto ipsec profile DMVPN_PROFILE
+ set transform-set ESP_AES_SHA 
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 150.1.3.3 255.255.255.255
+ ipv6 address 2001:150:3:3::3/128
+!
+interface Tunnel0
+ ip address 155.1.0.3 255.255.255.0
+ no ip redirects
+ ip mtu 1400
+ ip nhrp authentication NHRPPASS
+ ip nhrp map 155.1.0.5 169.254.100.5
+ ip nhrp map multicast 169.254.100.5
+ ip nhrp network-id 1
+ ip nhrp holdtime 300
+ ip nhrp nhs 155.1.0.5
+ ip tcp adjust-mss 1360
+ tunnel source GigabitEthernet2.100
+ tunnel mode gre multipoint
+ tunnel key 150
+ tunnel protection ipsec profile DMVPN_PROFILE
+!
+interface GigabitEthernet1
+ ip address 10.255.1.57 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ cdp enable
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2.13
+ encapsulation dot1Q 13
+ ip address 155.1.13.3 255.255.255.0
+ ipv6 address 2001:155:1:13::3/64
+!
+interface GigabitEthernet2.23
+ encapsulation dot1Q 23
+ ip address 155.1.23.3 255.255.255.0
+ ipv6 address 2001:155:1:23::3/64
+!
+interface GigabitEthernet2.37
+ encapsulation dot1Q 37
+ ip address 155.1.37.3 255.255.255.0
+ ipv6 address 2001:155:1:37::3/64
+!
+interface GigabitEthernet2.100
+ encapsulation dot1Q 100
+ ip address 169.254.100.3 255.255.255.0
+ ipv6 address 2001:169:254:100::3/64
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+no ip http secure-server
+ip http client source-interface GigabitEthernet1
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0
+ privilege level 15
+ no login
+line vty 1
+ privilege level 15
+ no login
+ length 0
+line vty 2 4
+ privilege level 15
+ no login
+!
+!
+!
+!
+!
+!
+end
+
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet2"/>
+    </node>
+    <node name="R-4" type="SIMPLE" subtype="CSR1000v" location="652,158">
+        <extensions>
+            <entry key="config" type="String">!
+! Last configuration change at 06:09:57 UTC Mon Nov 19 2018
+!
+version 16.6
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R4
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1027529472
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1027529472
+ revocation-check none
+ rsakeypair TP-self-signed-1027529472
+!
+crypto pki trustpoint TP-self-signed-189723134
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-189723134
+ revocation-check none
+ rsakeypair TP-self-signed-189723134
+!
+!
+crypto pki certificate chain TP-self-signed-1027529472
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+crypto pki certificate chain TP-self-signed-189723134
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 92Y6BT3XOOB
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+! 
+!
+!
+!
+!
+!
+!
+crypto isakmp policy 10
+ encr aes
+ hash md5
+ authentication pre-share
+ group 5
+crypto isakmp key cisco address 0.0.0.0        
+!
+!
+crypto ipsec transform-set ESP_AES_SHA esp-aes esp-sha-hmac 
+ mode tunnel
+!
+crypto ipsec profile DMVPN_PROFILE
+ set transform-set ESP_AES_SHA 
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 150.1.4.4 255.255.255.255
+ ipv6 address 2001:150:4:4::4/128
+!
+interface Tunnel0
+ ip address 155.1.0.4 255.255.255.0
+ no ip redirects
+ ip mtu 1400
+ ip nhrp authentication NHRPPASS
+ ip nhrp map 155.1.0.5 169.254.100.5
+ ip nhrp map multicast 169.254.100.5
+ ip nhrp network-id 1
+ ip nhrp holdtime 300
+ ip nhrp nhs 155.1.0.5
+ ip tcp adjust-mss 1360
+ tunnel source GigabitEthernet2.100
+ tunnel mode gre multipoint
+ tunnel key 150
+ tunnel protection ipsec profile DMVPN_PROFILE
+!
+interface GigabitEthernet1
+ ip address 10.255.1.51 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ cdp enable
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2.45
+ encapsulation dot1Q 45
+ ip address 155.1.45.4 255.255.255.0
+ ipv6 address 2001:155:1:45::4/64
+!
+interface GigabitEthernet2.100
+ encapsulation dot1Q 100
+ ip address 169.254.100.4 255.255.255.0
+ ipv6 address 2001:169:254:100::4/64
+!
+interface GigabitEthernet2.146
+ encapsulation dot1Q 146
+ ip address 155.1.146.4 255.255.255.0
+ ipv6 address 2001:155:1:146::4/64
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+ip http secure-server
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0
+ privilege level 15
+ no login
+line vty 1
+ privilege level 15
+ no login
+ length 0
+line vty 2 4
+ privilege level 15
+ no login
+!
+!
+!
+!
+!
+!
+end
+
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet2"/>
+    </node>
+    <node name="R-5" type="SIMPLE" subtype="CSR1000v" location="748,158">
+        <extensions>
+            <entry key="config" type="String">!
+! Last configuration change at 06:03:48 UTC Mon Nov 19 2018
+!
+version 16.6
+service config
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R5
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1244465983
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1244465983
+ revocation-check none
+ rsakeypair TP-self-signed-1244465983
+!
+!
+crypto pki certificate chain TP-self-signed-1244465983
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9UBO1SSJIRN
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+! 
+!
+!
+!
+!
+!
+!
+crypto isakmp policy 10
+ encr aes
+ hash md5
+ authentication pre-share
+ group 5
+crypto isakmp key cisco address 0.0.0.0        
+!
+!
+crypto ipsec transform-set ESP_AES_SHA esp-aes esp-sha-hmac 
+ mode tunnel
+!
+crypto ipsec profile DMVPN_PROFILE
+ set transform-set ESP_AES_SHA 
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 150.1.5.5 255.255.255.255
+ ipv6 address 2001:150:5:5::5/128
+!
+interface Tunnel0
+ ip address 155.1.0.5 255.255.255.0
+ no ip redirects
+ ip mtu 1400
+ ip nhrp authentication NHRPPASS
+ ip nhrp network-id 1
+ ip tcp adjust-mss 1360
+ delay 1000
+ tunnel source GigabitEthernet2.100
+ tunnel mode gre multipoint
+ tunnel key 150
+ tunnel protection ipsec profile DMVPN_PROFILE
+!
+interface GigabitEthernet1
+ ip address 10.255.1.52 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ cdp enable
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2.5
+ encapsulation dot1Q 5
+ ip address 155.1.5.5 255.255.255.0
+ ipv6 address 2001:155:1:5::5/64
+!
+interface GigabitEthernet2.45
+ encapsulation dot1Q 45
+ ip address 155.1.45.5 255.255.255.0
+ ipv6 address 2001:155:1:45::5/64
+!
+interface GigabitEthernet2.58
+ encapsulation dot1Q 58
+ ip address 155.1.58.5 255.255.255.0
+ ipv6 address 2001:155:1:58::5/64
+!
+interface GigabitEthernet2.100
+ encapsulation dot1Q 100
+ ip address 169.254.100.5 255.255.255.0
+ ipv6 address 2001:169:254:100::5/64
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+no ip http secure-server
+ip http client source-interface GigabitEthernet1
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0
+ privilege level 15
+ no login
+line vty 1
+ privilege level 15
+ no login
+ length 0
+line vty 2 4
+ privilege level 15
+ no login
+!
+!
+!
+!
+!
+!
+end
+
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet2"/>
+    </node>
+    <node name="R-6" type="SIMPLE" subtype="CSR1000v" location="844,158">
+        <extensions>
+            <entry key="config" type="String">!
+! Last configuration change at 06:03:58 UTC Mon Nov 19 2018
+!
+version 16.6
+service config
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R6
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-285579434
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-285579434
+ revocation-check none
+ rsakeypair TP-self-signed-285579434
+!
+!
+crypto pki certificate chain TP-self-signed-285579434
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 99VN0Z6JXUB
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 150.1.6.6 255.255.255.255
+ ipv6 address 2001:150:6:6::6/128
+!
+interface GigabitEthernet1
+ ip address 10.255.1.53 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ cdp enable
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2.67
+ encapsulation dot1Q 67
+ ip address 155.1.67.6 255.255.255.0
+ ipv6 address 2001:155:1:67::6/64
+!
+interface GigabitEthernet2.146
+ encapsulation dot1Q 146
+ ip address 155.1.146.6 255.255.255.0
+ ipv6 address 2001:155:1:146::6/64
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+no ip http secure-server
+ip http client source-interface GigabitEthernet1
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0
+ privilege level 15
+ no login
+line vty 1
+ privilege level 15
+ no login
+ length 0
+line vty 2 4
+ privilege level 15
+ no login
+!
+!
+!
+!
+!
+!
+end
+
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet2"/>
+    </node>
+    <node name="R-7" type="SIMPLE" subtype="CSR1000v" location="940,158">
+        <extensions>
+            <entry key="config" type="String">!
+! Last configuration change at 06:03:57 UTC Mon Nov 19 2018
+!
+version 16.6
+service config
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R7
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-288963671
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-288963671
+ revocation-check none
+ rsakeypair TP-self-signed-288963671
+!
+!
+crypto pki certificate chain TP-self-signed-288963671
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9OQE7ZWE6GU
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 150.1.7.7 255.255.255.255
+ ipv6 address 2001:150:7:7::7/128
+!
+interface GigabitEthernet1
+ ip address 10.255.1.54 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ cdp enable
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2.7
+ encapsulation dot1Q 7
+ ip address 155.1.7.7 255.255.255.0
+ ipv6 address 2001:155:1:7::7/64
+!
+interface GigabitEthernet2.37
+ encapsulation dot1Q 37
+ ip address 155.1.37.7 255.255.255.0
+ ipv6 address 2001:155:1:37::7/64
+!
+interface GigabitEthernet2.67
+ encapsulation dot1Q 67
+ ip address 155.1.67.7 255.255.255.0
+ ipv6 address 2001:155:1:67::7/64
+!
+interface GigabitEthernet2.79
+ encapsulation dot1Q 79
+ ip address 155.1.79.7 255.255.255.0
+ ipv6 address 2001:155:1:79::7/64
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+no ip http secure-server
+ip http client source-interface GigabitEthernet1
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0
+ privilege level 15
+ no login
+line vty 1
+ privilege level 15
+ no login
+ length 0
+line vty 2 4
+ privilege level 15
+ no login
+!
+!
+!
+!
+!
+!
+end
+
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet2"/>
+    </node>
+    <node name="R-8" type="SIMPLE" subtype="CSR1000v" location="1036,158">
+        <extensions>
+            <entry key="config" type="String">!
+! Last configuration change at 06:03:57 UTC Mon Nov 19 2018
+!
+version 16.6
+service config
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R8
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
 !
 !
 !
@@ -210,8 +1636,6 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
 ip classless
 ip subnet-zero
 no ip domain lookup
@@ -290,8 +1714,6 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
 ip classless
 ip subnet-zero
 no ip domain lookup
@@ -370,8 +1792,6 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
 ip classless
 ip subnet-zero
 no ip domain lookup
@@ -406,8 +1826,184 @@ interface GigabitEthernet2
   description to SWITCH
   no ip address
   cdp enable
-  no shutdown
+subscriber templating
+! 
+! 
+! 
+! 
 !
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+!
+crypto pki trustpoint TP-self-signed-1242760263
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-1242760263
+ revocation-check none
+ rsakeypair TP-self-signed-1242760263
+!
+!
+crypto pki certificate chain TP-self-signed-1242760263
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9AA94TVOE88
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 150.1.8.8 255.255.255.255
+ ipv6 address 2001:150:8:8::8/128
+!
+interface GigabitEthernet1
+ ip address 10.255.1.55 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ cdp enable
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2.8
+ encapsulation dot1Q 8
+ ip address 155.1.8.8 255.255.255.0
+ ipv6 address 2001:155:1:8::8/64
+!
+interface GigabitEthernet2.58
+ encapsulation dot1Q 58
+ ip address 155.1.58.8 255.255.255.0
+ ipv6 address 2001:155:1:58::8/64
+!
+interface GigabitEthernet2.108
+ encapsulation dot1Q 108
+ ip address 155.1.108.8 255.255.255.0
+ ipv6 address 2001:155:1:108::8/64
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+no ip http secure-server
+ip http client source-interface GigabitEthernet1
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0
+ privilege level 15
+ no login
+line vty 1
+ privilege level 15
+ no login
+ length 0
+line vty 2 4
+ privilege level 15
+ no login
+!
+!
+!
+!
+!
+!
+end
+
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet2"/>
+    </node>
+    <node name="R-9" type="SIMPLE" subtype="CSR1000v" location="1132,158">
+        <extensions>
+            <entry key="config" type="String">!
+! Last configuration change at 06:03:58 UTC Mon Nov 19 2018
+!
+version 16.6
+service config
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R9
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
 !
 !
 !
@@ -450,8 +2046,6 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
 ip classless
 ip subnet-zero
 no ip domain lookup
@@ -530,8 +2124,6 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
 ip classless
 ip subnet-zero
 no ip domain lookup
@@ -566,12 +2158,115 @@ interface GigabitEthernet2
   description to SWITCH
   no ip address
   cdp enable
-  no shutdown
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
 !
 !
 !
 !
 !
+crypto pki trustpoint TP-self-signed-694811941
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-694811941
+ revocation-check none
+ rsakeypair TP-self-signed-694811941
+!
+!
+crypto pki certificate chain TP-self-signed-694811941
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9IFIKBZ6SOV
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 150.1.9.9 255.255.255.255
+ ipv6 address 2001:150:9:9::9/128
+!
+interface GigabitEthernet1
+ ip address 10.255.1.56 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ cdp enable
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2.9
+ encapsulation dot1Q 9
+ ip address 155.1.9.9 255.255.255.0
+ ipv6 address 2001:155:1:9::9/64
+!
+interface GigabitEthernet2.79
+ encapsulation dot1Q 79
+ ip address 155.1.79.9 255.255.255.0
+ ipv6 address 2001:155:1:79::9/64
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+no ip http secure-server
+ip http client source-interface GigabitEthernet1
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
 end</entry>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
         </extensions>
@@ -610,8 +2305,6 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
 ip classless
 ip subnet-zero
 no ip domain lookup
@@ -646,7 +2339,66 @@ interface GigabitEthernet2
   description to SWITCH
   no ip address
   cdp enable
-  no shutdown
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0
+ privilege level 15
+ no login
+line vty 1
+ privilege level 15
+ no login
+ length 0
+line vty 2 4
+ privilege level 15
+ no login
+!
+!
+!
+!
+!
+!
+end
+
+</entry>
+        </extensions>
+        <interface id="0" name="GigabitEthernet2"/>
+    </node>
+    <node name="R-10" type="SIMPLE" subtype="CSR1000v" location="1219,158">
+        <extensions>
+            <entry key="config" type="String">!
+! Last configuration change at 06:03:57 UTC Mon Nov 19 2018
+!
+version 16.6
+service config
+service timestamps debug datetime msec
+service timestamps log datetime msec
+platform qfp utilization monitor load 80
+no platform punt-keepalive disable-kernel-core
+platform console serial
+!
+hostname R10
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+no ip domain lookup
 !
 !
 !
@@ -690,8 +2442,6 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
 ip classless
 ip subnet-zero
 no ip domain lookup
@@ -770,8 +2520,6 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 no service config
-enable password cisco
-enable secret 4 tnhtc92DXBhelxjYk8LWJrPV36S2i4ntXrpb4RFmfqY
 ip classless
 ip subnet-zero
 no ip domain lookup
@@ -806,14 +2554,142 @@ interface GigabitEthernet2
   description to SWITCH
   no ip address
   cdp enable
-  no shutdown
+subscriber templating
+! 
+! 
+! 
+! 
+!
+ipv6 unicast-routing
+!
+!
+multilink bundle-name authenticated
 !
 !
 !
 !
+!
+crypto pki trustpoint TP-self-signed-4241231264
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-4241231264
+ revocation-check none
+ rsakeypair TP-self-signed-4241231264
+!
+!
+crypto pki certificate chain TP-self-signed-4241231264
+ certificate self-signed 01 nvram:IOS-Self-Sig#1.cer
+!
+!
+!
+!
+!
+!
+!
+!
+!
+license udi pid CSR1000V sn 9E0Y8GJV30S
+diagnostic bootup level minimal
+spanning-tree extend system-id
+!
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+cdp run
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+! 
+! 
+!
+!
+interface Loopback0
+ ip address 150.1.10.10 255.255.255.255
+ ipv6 address 2001:150:10:10::10/128
+!
+interface GigabitEthernet1
+ ip address 10.255.1.47 255.255.0.0
+ negotiation auto
+ no mop enabled
+ no mop sysid
+ cdp enable
+!
+interface GigabitEthernet2
+ no ip address
+ negotiation auto
+ no mop enabled
+ no mop sysid
+!
+interface GigabitEthernet2.10
+ encapsulation dot1Q 10
+ ip address 155.1.10.10 255.255.255.0
+ ipv6 address 2001:155:1:10::10/64
+!
+interface GigabitEthernet2.108
+ encapsulation dot1Q 108
+ ip address 155.1.108.10 255.255.255.0
+ ipv6 address 2001:155:1:108::10/64
+!
+!
+virtual-service csr_mgmt
+!
+ip forward-protocol nd
+no ip http server
+ip http authentication local
+no ip http secure-server
+ip http client source-interface GigabitEthernet1
+!
+ip ssh server algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+ip ssh client algorithm encryption aes128-ctr aes192-ctr aes256-ctr
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+ stopbits 1
+line vty 0
+ privilege level 15
+ no login
+line vty 1
+ privilege level 15
+ no login
+ length 0
+line vty 2 4
+ privilege level 15
+ no login
 !
 end</entry>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
+end
+
+</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet2"/>
     </node>
