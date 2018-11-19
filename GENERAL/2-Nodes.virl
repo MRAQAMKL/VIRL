@@ -10,7 +10,7 @@
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 18:45:52 UTC Sun Nov 18 2018
+! Last configuration change at 18:57:13 UTC Sun Nov 18 2018
 !
 version 15.6
 service timestamps debug datetime msec
@@ -146,7 +146,7 @@ line con 0
  password cisco
 line aux 0
 line vty 0 4
- exec-timeout 720 0
+ exec-timeout 20 0
  password cisco
  login local
  transport input telnet ssh
@@ -163,7 +163,7 @@ end
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
-! Last configuration change at 18:35:09 UTC Sun Nov 18 2018
+! Last configuration change at 18:48:09 UTC Sun Nov 18 2018
 !
 version 15.6
 service timestamps debug datetime msec
