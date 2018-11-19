@@ -6,7 +6,7 @@
         <entry key="AutoNetkit.IGP" type="String">eigrp</entry>
         <entry key="AutoNetkit.enable_mpls_oam" type="Boolean">true</entry>
     </extensions>
-    <node name="iosv-1" type="SIMPLE" subtype="IOSv" location="583,467" ipv4="192.168.0.1">
+    <node name="iosv-1" type="SIMPLE" subtype="IOS>>>>>>> e9483e6c5b8e2936cceb9a3fce5a33bf1e1edb11
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
@@ -160,7 +160,7 @@ end
         </extensions>
         <interface id="0" name="GigabitEthernet0/1" ipv4="10.0.0.5" netPrefixLenV4="30"/>
     </node>
-    <node name="iosv-2" type="SIMPLE" subtype="IOSv" location="930,464" ipv4="192.168.0.2">
+    <node name="iosv-2" type="SIMPLE" subtype="IOSv" location="485,190" ipv4="192.168.0.2">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">!
