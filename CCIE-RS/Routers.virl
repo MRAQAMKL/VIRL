@@ -5,7 +5,7 @@
         <entry key="AutoNetkit.address_family" type="String">None</entry>
         <entry key="management_network" type="String">flat</entry>
     </extensions>
-    <node name="SWITCH" type="SIMPLE" subtype="Unmanaged Switch" location="470,256">
+    <node name="SWITCH" type="SIMPLE" subtype="Unmanaged Switch" location="685,350">
         <interface id="0" name="link1"/>
         <interface id="1" name="link2"/>
         <interface id="2" name="link3"/>
@@ -17,7 +17,7 @@
         <interface id="8" name="link9"/>
         <interface id="9" name="link10"/>
     </node>
-    <node name="R-1" type="SIMPLE" subtype="CSR1000v" location="84,78">
+    <node name="R-1" type="SIMPLE" subtype="CSR1000v" location="299,172">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">! IOS Config generated on 2018-11-19 14:17
@@ -97,7 +97,7 @@ end</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet2"/>
     </node>
-    <node name="R-2" type="SIMPLE" subtype="CSR1000v" location="180,78">
+    <node name="R-2" type="SIMPLE" subtype="CSR1000v" location="395,172">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">! IOS Config generated on 2018-11-19 14:17
@@ -177,7 +177,7 @@ end</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet2"/>
     </node>
-    <node name="R-3" type="SIMPLE" subtype="CSR1000v" location="276,78">
+    <node name="R-3" type="SIMPLE" subtype="CSR1000v" location="491,172">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">! IOS Config generated on 2018-11-19 14:17
@@ -257,7 +257,7 @@ end</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet2"/>
     </node>
-    <node name="R-4" type="SIMPLE" subtype="CSR1000v" location="372,78">
+    <node name="R-4" type="SIMPLE" subtype="CSR1000v" location="587,172">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">! IOS Config generated on 2018-11-19 14:17
@@ -337,7 +337,7 @@ end</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet2"/>
     </node>
-    <node name="R-5" type="SIMPLE" subtype="CSR1000v" location="468,78">
+    <node name="R-5" type="SIMPLE" subtype="CSR1000v" location="683,172">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">! IOS Config generated on 2018-11-19 14:17
@@ -417,7 +417,7 @@ end</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet2"/>
     </node>
-    <node name="R-6" type="SIMPLE" subtype="CSR1000v" location="564,78">
+    <node name="R-6" type="SIMPLE" subtype="CSR1000v" location="779,172">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">! IOS Config generated on 2018-11-19 14:17
@@ -497,7 +497,7 @@ end</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet2"/>
     </node>
-    <node name="R-7" type="SIMPLE" subtype="CSR1000v" location="660,78">
+    <node name="R-7" type="SIMPLE" subtype="CSR1000v" location="875,172">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">! IOS Config generated on 2018-11-19 14:17
@@ -577,7 +577,7 @@ end</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet2"/>
     </node>
-    <node name="R-8" type="SIMPLE" subtype="CSR1000v" location="756,78">
+    <node name="R-8" type="SIMPLE" subtype="CSR1000v" location="971,172">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">! IOS Config generated on 2018-11-19 14:17
@@ -657,7 +657,7 @@ end</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet2"/>
     </node>
-    <node name="R-9" type="SIMPLE" subtype="CSR1000v" location="852,78">
+    <node name="R-9" type="SIMPLE" subtype="CSR1000v" location="1067,172">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">! IOS Config generated on 2018-11-19 14:17
@@ -737,7 +737,7 @@ end</entry>
         </extensions>
         <interface id="0" name="GigabitEthernet2"/>
     </node>
-    <node name="R-10" type="SIMPLE" subtype="CSR1000v" location="939,78">
+    <node name="R-10" type="SIMPLE" subtype="CSR1000v" location="1154,172">
         <extensions>
             <entry key="AutoNetkit.mgmt_ip" type="string"></entry>
             <entry key="config" type="String">! IOS Config generated on 2018-11-19 14:17
